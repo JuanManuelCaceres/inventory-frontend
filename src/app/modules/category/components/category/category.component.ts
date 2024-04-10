@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-category',
@@ -24,7 +25,10 @@ export class CategoryComponent implements OnInit {
   
   displayedColumns: string[]=['id','name','description','actions'];
   dataSource : MatTableDataSource<CategoryElement> = new MatTableDataSource<CategoryElement>();
-  
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
   getCategories(): void {
     this.categorySerivice.getCategories()
       .subscribe((data:any)=>{
@@ -45,7 +49,7 @@ export class CategoryComponent implements OnInit {
       });
 
       this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
-
+      this.dataSource.paginator = this.paginator;
     }
   }
 
