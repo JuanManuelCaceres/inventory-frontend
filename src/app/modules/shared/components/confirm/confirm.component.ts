@@ -20,7 +20,9 @@ export class ConfirmComponent implements OnInit{
   onNoClick(){
     this.dialogRef.close(3);
   }
-
+  /**
+   * delete category
+   */
   delete(){
     if(this.data!=null){
       this.categoryService.deleteCategory(this.data.id)
@@ -34,4 +36,6 @@ export class ConfirmComponent implements OnInit{
       this.dialogRef.close(2);
     }
   }
+
+  
 }
