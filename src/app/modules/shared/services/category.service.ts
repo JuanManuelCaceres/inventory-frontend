@@ -24,7 +24,7 @@ export class CategoryService {
 
   /**
    * save category 
-   * 
+   * @param body {description: string, id : number, name : string}
    */
 
   saveCategory(body:any){
@@ -33,11 +33,27 @@ export class CategoryService {
     return this.http.post(endpoint, body);
   }
 
-  deleteCategory(id:number){
-    const endpoint = `${base_url}/categories/${id.toString}`;
+  /**
+   * delete category
+   * @param id category id
+   * @returns delete category by id
+   */
+
+  deleteCategory(id:any){
+    const endpoint = `${base_url}/categories/${id}`;
     return this.http.delete(endpoint);
 
   }
 
+  /**
+   * 
+   * @param body {description: string, id : number, name : string}
+   * @param id category id
+   * @returns update given category
+   */
+  updateCategory(body:any,id:any){
+    const endpoint = `${base_url}/categories/${id}`;
 
+    return this.http.put(endpoint,body);
+  }
 }

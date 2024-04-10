@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryService } from 'src/app/modules/shared/services/category.service';
 
 @Component({
@@ -11,16 +11,23 @@ import { CategoryService } from 'src/app/modules/shared/services/category.servic
 export class NewCategoryComponent  implements OnInit{
   
   public categoryForm!: FormGroup;
-
+  formState:string ="";
   private fb = inject(FormBuilder);
   private service = inject(CategoryService);
   private dialogRef = inject(MatDialogRef);
-
+  public data = inject(MAT_DIALOG_DATA);
+  
   ngOnInit(): void {
+    this.formState="Agregar"
     this.categoryForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required]
     });
+
+    if(this.data != null){
+      this.updateForm(this.data);
+      this.formState="Actualizar";
+    }
   }
 
   onSave(){
@@ -29,16 +36,36 @@ export class NewCategoryComponent  implements OnInit{
       description: this.categoryForm.get('description')?.value
     }
 
-    this.service.saveCategory(data)
+    if(this.data!=null){
+      //update registery
+      this.service.updateCategory(data, this.data.id)
+      .subscribe((data:any)=>{
+        this.dialogRef.close(1);
+      }, (error:any)=>{
+        this.dialogRef.close(2);
+      })
+      
+    } else {
+      //create new registery
+      this.service.saveCategory(data)
       .subscribe(data => {
         console.log(data);
         this.dialogRef.close(1);
       }, (error:any)=>{
         this.dialogRef.close(2);
-      });
-}
+      })
+    }
+    
+  }
 
   onCancel(){
     this.dialogRef.close(0);
+  }
+
+  updateForm(data:any){
+    this.categoryForm = this.fb.group({
+      name: [data.name, Validators.required],
+      description: [data.description, Validators.required]
+    });
   }
 }
