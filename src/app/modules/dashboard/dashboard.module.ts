@@ -15,7 +15,8 @@ import { CategoryModule } from '../category/category.module';
   imports: [
     CommonModule,
     SharedModule,
-    CategoryModule
+    CategoryModule,
+    RouterModule
     
   ]
 })

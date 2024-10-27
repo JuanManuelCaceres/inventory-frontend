@@ -14,10 +14,8 @@
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>person_outline</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <mat-icon>
-                            exit_to_app
-                        </mat-icon>
+                    <mat-menu #menu="matMenu" class="center">
+                        <mat-icon>exit_to_app</mat-icon>
                         Cerrar Sesión
                     </mat-menu>
                 </li>
@@ -37,14 +35,18 @@
                 <div class="profile-card">
                     <div class="header">
                         <h2>Juan Manuel</h2>
-                        <h4>juan@gmail.com</h4>
+                        <h4>juan @ gmail.com</h4>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
+                
+                <!-- menus -->
                 <a mat-list-item [routerLink]="nav.route" *ngFor="let nav of menuNav">
                     <mat-icon class="icon"> {{nav.icon}} </mat-icon>
                     {{nav.name}}
                 </a>
+
+
             </mat-nav-list>
         </mat-sidenav>
 
