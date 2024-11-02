@@ -1,0 +1,79 @@
+<mat-card >
+    <h2 > Listado de productos </h2>
+
+    <!-- Input search -->
+    <mat-card-header>    
+        <div>
+            <mat-form-field  hintLabel="Buscar Producto" appearance="fill">
+                <mat-label>Buscar Producto</mat-label>
+                <input matInput #input (keyup)="buscar(input.value)">
+            </mat-form-field>
+        </div>
+    </mat-card-header>
+
+    <!-- search button -->
+    <mat-card-header>
+        <div class="rigth">
+            <ul>
+                <li>
+                    <button mat-raised-button color="primary" (click)="openCategoryDialog()">Agregar Producto</button>
+                </li>
+            </ul>
+        </div>
+    </mat-card-header>
+    <div mat-card-image></div>
+
+    <!-- product table -->
+     <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="mat-cell">
+            <!-- id column-->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Nº </th>
+                <td mat-cell *matCellDef="let element">{{ element.id}}</td>
+            </ng-container>
+
+            <!-- name column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element" > {{element.name}}</td>
+            </ng-container>
+            
+            <!-- description -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                <td mat-cell *matCellDef="let element" > {{element.description}}</td>
+            </ng-container>
+
+            <!-- accouns column -->
+            <ng-container matColumnDef="accounts">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let element" > {{element.accounts}}</td>
+            </ng-container>
+
+            <!-- costPrice column -->
+            <ng-container matColumnDef="costPrice">
+                <th mat-header-cell *matHeaderCellDef> Costo </th>
+                <td mat-cell *matCellDef="let element" > {{element.costPrice}}</td>
+            </ng-container>
+            
+            <!-- sellPrice column -->
+            <ng-container matColumnDef="sellPrice">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let element" > {{ element.sellPrice }}</td>
+            </ng-container>
+            
+            <!-- accouns column -->
+            <ng-container matColumnDef="picture">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let element" > <a>{{element.accounts}}</a></td>
+            </ng-container>
+            
+            
+            <!-- create columns and rows --> 
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            
+        </table>
+        <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+     </mat-card-content>
+</mat-card>
