@@ -47,7 +47,7 @@
             <!-- accouns column -->
             <ng-container matColumnDef="accounts">
                 <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-                <td mat-cell *matCellDef="let element" > {{element.accounts}}</td>
+                <td mat-cell *matCellDef="let element" > {{element.account}}</td>
             </ng-container>
 
             <!-- costPrice column -->
@@ -58,16 +58,30 @@
             
             <!-- sellPrice column -->
             <ng-container matColumnDef="sellPrice">
-                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
                 <td mat-cell *matCellDef="let element" > {{ element.sellPrice }}</td>
             </ng-container>
             
-            <!-- accouns column -->
+            <!-- picture column -->
             <ng-container matColumnDef="picture">
-                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-                <td mat-cell *matCellDef="let element" > <a>{{element.accounts}}</a></td>
+                <th mat-header-cell *matHeaderCellDef> Imagen </th>
+                <td mat-cell *matCellDef="let element" > 
+                    <img [src]="element.picture" *ngIf="element.picture" style="max-height: 50px; object-fit: contain;">
+                </td>
             </ng-container>
             
+            <!-- actions column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent" (click)="editProduct(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteProduct(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
             
             <!-- create columns and rows --> 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
