@@ -12,11 +12,11 @@ ul li {
 }
 
 table {
-    width: 100%;
+    width: 75%;
 }
 
 mat-form-field{
-    width: 200%;
+    width: 140%;
 }
 
 .mat-cell:nth-child(1),

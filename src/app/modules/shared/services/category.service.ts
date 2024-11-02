@@ -17,8 +17,8 @@ export class CategoryService {
    */
 
   getCategories(){
-    const api_url ="/categories";
-    const endpoint = base_url+api_url;
+    
+    const endpoint = `${base_url}/categories`;
     return this.http.get(endpoint);
   }
 

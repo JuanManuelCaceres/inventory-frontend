@@ -35,24 +35,45 @@ export class NewCategoryComponent  implements OnInit{
       name: this.categoryForm.get('name')?.value,
       description: this.categoryForm.get('description')?.value
     }
+    // if you will use this form only for save new categories use the next line:
+    // "this.service.updateCategory(data, this.data.id)
+    //  .subscribe({
+    //    next: data => {
+    //    console.log(data);
+    //    this.dialogRef.close(1);
+    //  }, 
+    //  error: (error:any)=>{
+    //    this.dialogRef.close(2);
+    //  }
+    // })"
+    
+    
+    // in this case we will reuse this form to update existents categories
 
+
+     //update registery
     if(this.data!=null){
-      //update registery
       this.service.updateCategory(data, this.data.id)
-      .subscribe((data:any)=>{
+      .subscribe({
+        next:(data:any)=>{
         this.dialogRef.close(1);
-      }, (error:any)=>{
+        },
+        error: (error:any)=>{
         this.dialogRef.close(2);
-      })
+        }
+    })
       
+    //create new registery
     } else {
-      //create new registery
       this.service.saveCategory(data)
-      .subscribe(data => {
-        console.log(data);
-        this.dialogRef.close(1);
-      }, (error:any)=>{
-        this.dialogRef.close(2);
+      .subscribe({
+        next: data => {
+          console.log(data);
+          this.dialogRef.close(1);
+        }, 
+        error: (error:any)=>{
+          this.dialogRef.close(2);
+        }
       })
     }
     

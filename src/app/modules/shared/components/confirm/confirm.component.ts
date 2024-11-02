@@ -26,16 +26,18 @@ export class ConfirmComponent implements OnInit{
   delete(){
     if(this.data!=null){
       this.categoryService.deleteCategory(this.data.id)
-      .subscribe((data:any) =>{
+      .subscribe({
+        next: (data:any) =>{
         this.dialogRef.close(1);
-      }, (error:any)=>{
+        }, 
+        error: (error:any)=>{
         this.dialogRef.close(2);
+        }
       }
-      );
-    } else {
+      )}
+     else {
       this.dialogRef.close(2);
     }
   }
-
-  
 }
+

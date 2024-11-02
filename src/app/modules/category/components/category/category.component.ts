@@ -20,7 +20,7 @@ export class CategoryComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
-    this.getCategories()
+    this.getCategories();
   }
   
   displayedColumns: string[]=['id','name','description','actions'];
@@ -31,11 +31,18 @@ export class CategoryComponent implements OnInit {
 
   getCategories(): void {
     this.categorySerivice.getCategories()
-      .subscribe((data:any)=>{
-        console.log("respuesta categories",data);
-        this.proccesCategoriesRespones(data)
-      }
-      )    
+      .subscribe({
+        next: (data:any)=>{
+          console.log("respuesta categories: ",data);
+          this.proccesCategoriesRespones(data)   
+        },
+        error: (error:any) =>{
+          console.log("error: ",error);
+        },
+        complete: () =>{
+
+        }
+      })    
   }
 
   proccesCategoriesRespones(resp:any){
@@ -44,8 +51,8 @@ export class CategoryComponent implements OnInit {
     if(resp.metadata[0].code == "00"){
       let listCategory = resp.categoryResponse.categories;
 
-      listCategory.forEach((element:CategoryElement) => {
-        dataCategory.push(element);
+      listCategory.forEach((category:CategoryElement) => {
+          dataCategory.push(category);
       });
 
       this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
@@ -93,7 +100,7 @@ export class CategoryComponent implements OnInit {
   deleteCategory(id:any){
   
     const dialogRef = this.dialog.open( ConfirmComponent, {
-      width: '450px',
+      
       data: {id:id}
     });
 
@@ -118,9 +125,7 @@ export class CategoryComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.proccesCategoriesRespones(resp);
       })
-
   }
-
 }
 
 export interface CategoryElement{

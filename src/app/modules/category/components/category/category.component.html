@@ -1,15 +1,17 @@
 <mat-card>
-
     <h2 class="alinear">Listado de Categorías</h2>
-    <mat-card-header>
+
+    <!-- Input search -->
+    <mat-card-header>    
         <div>
             <mat-form-field  hintLabel="Buscar Categoría" appearance="fill">
                 <mat-label>Buscar Categorías</mat-label>
                 <input matInput #input (keyup)="buscar(input.value)">
             </mat-form-field>
         </div>
-
     </mat-card-header>
+    
+    <!-- button add category -->
     <mat-card-header>
         <div class="rigth">
             <ul>
@@ -20,6 +22,13 @@
         </div>
     </mat-card-header>
     <div mat-card-image></div>
+    
+    <!-- Category table: 
+     /*
+     * primero debemos otorgarle un dataSource a nuestra mat-table, el cual obtenemos medainte nuestra api
+     * segundo definimos el comportamiento logico de cada una de nuestras columnas
+     * tercero creamos el contenido de la tabla medainte <tr> con directivas matRowHeaderDef y matRowDef
+     -->
     <mat-card-content>
         <table mat-table [dataSource]="dataSource" class="mat-cell">
         
@@ -53,12 +62,13 @@
                     </button>
                 </td>
             </ng-container>
-
+            
+            <!-- create columns and rows -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            
         </table>
         <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
-
         </mat-paginator>
     </mat-card-content>
 </mat-card>
