@@ -19,4 +19,8 @@ export class ProductService {
     const endpoint =`${base_url}/products`;
     return this.http.get(endpoint);
   }
+
+  deleteProduct(id:number){
+    const endpoint = `${base_url}/products/${id}`
+  }
 }
