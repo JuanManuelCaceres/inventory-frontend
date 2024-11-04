@@ -8,7 +8,7 @@ const base_url = "http://localhost:8080/api/v1";
   providedIn: 'root'
 })
 export class ProductService {
-
+  
   constructor(private http: HttpClient) { }
 
   /**
@@ -20,7 +20,33 @@ export class ProductService {
     return this.http.get(endpoint);
   }
 
+  /**
+   * delete a product by id
+   * @param id 
+   */
   deleteProduct(id:number){
-    const endpoint = `${base_url}/products/${id}`
+    const endpoint = `${base_url}/products/${id}`;
+    return this.http.delete(endpoint);
   }
+
+  /**
+   * update a product
+   * @param data 
+   * @param id 
+   * @returns 
+   */
+  updateProduct(FormData:FormData, id: any) {
+    const endpoint = `${base_url}/products/${id}`;
+    return this.http.put(endpoint,FormData);
+  }
+  /**
+   * save a product
+   * @param data 
+   * @returns 
+   */
+  saveProduct(FormData:FormData) {
+    const endpoint=`${base_url}/products`;
+    return this.http.post(endpoint,FormData);
+  }
+
 }

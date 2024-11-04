@@ -58,10 +58,15 @@ export class CategoryService {
   }
 
   
-  getCategoryById(id:any){
-    const endpoint = `${base_url}/categories/${id}`;
+  getCategory(termino:string){
+    const endpointId = `${base_url}/categories/${termino}`;
 
-    return this.http.get(endpoint);
+    const endpointName = `${base_url}/categories/filter/${termino}`;
+    if(!isNaN(Number(termino))){
+      return this.http.get(endpointId);  
+    }
+    return this.http.get(endpointName);
   }
 
+  
 }

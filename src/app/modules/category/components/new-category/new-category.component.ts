@@ -29,7 +29,7 @@ export class NewCategoryComponent  implements OnInit{
       this.formState="Actualizar";
     }
   }
-
+  
   onSave(){
     let data = {
       name: this.categoryForm.get('name')?.value,

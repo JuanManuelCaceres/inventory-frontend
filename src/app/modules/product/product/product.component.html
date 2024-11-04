@@ -1,5 +1,5 @@
-<mat-card >
-    <h2 > Listado de productos </h2>
+<mat-card class="product-list-container">
+    <h2 class="alinear"> Listado de productos </h2>
 
     <!-- Input search -->
     <mat-card-header>    
@@ -11,7 +11,7 @@
         </div>
     </mat-card-header>
 
-    <!-- search button -->
+    <!-- add product button -->
     <mat-card-header>
         <div class="rigth">
             <ul>
@@ -41,7 +41,7 @@
             <!-- category -->
             <ng-container matColumnDef="category">
                 <th mat-header-cell *matHeaderCellDef> Categoría </th>
-                <td mat-cell *matCellDef="let element" > {{element.category}}</td>
+                <td mat-cell *matCellDef="let element" > {{element.category.name}}</td>
             </ng-container>
 
             <!-- accouns column -->
@@ -74,7 +74,7 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="accent" (click)="editProduct(element)">
+                    <button mat-icon-button color="accent" (click)="editProduct(element.id,element.name,element.category,element.account,element.costPrice,element.sellPrice,element.picture)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn" (click)="deleteProduct(element.id)">

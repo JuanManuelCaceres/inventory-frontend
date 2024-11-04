@@ -121,7 +121,7 @@ export class CategoryComponent implements OnInit {
       return this.getCategories();
     } 
     
-    this.categorySerivice.getCategoryById(termino)
+    this.categorySerivice.getCategory(termino)
       .subscribe((resp:any)=>{
         this.proccesCategoriesRespones(resp);
       })

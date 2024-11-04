@@ -1,7 +1,30 @@
+.product-list-container{
+   margin: 10px;
+   margin-top: 15px;
+}
+
+.alinear {
+    text-align: center;
+    margin-top: 20px ;
+}
+
 ul li {
     list-style: none;
 }
 
-.rigth {
+.rigth{
     margin-left: auto;
+}
+
+table {
+    width: 75%;
+}
+
+mat-form-field{
+    width: 140%;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1){
+    flex: 0 0 6%;
 }

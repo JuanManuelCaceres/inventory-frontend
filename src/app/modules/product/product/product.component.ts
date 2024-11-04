@@ -2,6 +2,10 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductService } from '../../shared/service/product.service';
+import { NewProductComponent } from '../new-product/new-product.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -10,6 +14,9 @@ import { ProductService } from '../../shared/service/product.service';
 export class ProductComponent implements OnInit{
   
   private productService = inject(ProductService);
+  public dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+  
   
   ngOnInit(): void {
     this.getProducts();
@@ -38,7 +45,7 @@ export class ProductComponent implements OnInit{
       let listProduct = resp.productResponse.products;
 
       listProduct.forEach((product:ProductElement)=>{
-        product.category = product.category.name;
+        //product.category = product.category.name;
         product.picture = 'data:image/jpeg;base64,'+product.picture;
         dataProduct.push(product);
       });
@@ -49,20 +56,50 @@ export class ProductComponent implements OnInit{
   }
 
   
- 
-  
   openProductDialog() {
-    throw new Error('Method not implemented.');
+    const dialogRef = this.dialog.open( NewProductComponent , {
+      width: '450px',
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==1){
+        this.openSnackBar("Producto agregado","Exitosa");
+        this.getProducts();
+      } else if (result==2){
+        this.openSnackBar("Se produjo un error al guardar producto","Error");
+      }
+    });
   }
+
+
+  openSnackBar(message:string,action:string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message,action,{
+      duration: 20
+    })
+  }
+  
   buscar(arg0: string) {
     throw new Error('Method not implemented.');
   }
 
-  editProduct(element : any){
+  editProduct(id:number,name:string,category:any,account:number,costPrice:number,sellPrice:number,picture:File){
+    const dialogRef = this.dialog.open( NewProductComponent , {
+      width: '450px',
+      data: {id:id,name:name,category:category,account:account,costPrice:costPrice,sellPrice:sellPrice,picture:picture}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==1){
+        this.openSnackBar("Producto actualizado","Exitosa");
+        this.getProducts();
+      } else if (result==2){
+        this.openSnackBar("Se produjo un error al actualizar producto","Error");
+      }
+    });
   }
 
-  deleteProduct(id:number){
+  deleteProduct(id:any){
     this.productService.deleteProduct(id);
   }
 
