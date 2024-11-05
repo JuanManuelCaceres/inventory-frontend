@@ -89,7 +89,7 @@ throw new Error('Method not implemented.');
     }
     
     const formData = new FormData();
-    formData.append('picture',data.picture);
+    formData.append('picture',data.picture, data.picture.name);
     formData.append('name',data.name);
     formData.append('sellPrice',data.sellPrice);
     formData.append('costPrice',data.costPrice);

@@ -79,9 +79,18 @@ export class ProductComponent implements OnInit{
     })
   }
   
-  buscar(arg0: string) {
-    throw new Error('Method not implemented.');
+  buscar(termino: string) {
+    if(termino.length === 0){
+      return this.getProducts();
+    } 
+    
+    this.productService.getProduct(termino)
+      .subscribe((resp:any)=>{
+        this.proccesProductResponse(resp);
+    })
+    
   }
+  
 
   editProduct(id:number,name:string,category:any,account:number,costPrice:number,sellPrice:number,picture:File){
     const dialogRef = this.dialog.open( NewProductComponent , {
@@ -100,7 +109,19 @@ export class ProductComponent implements OnInit{
   }
 
   deleteProduct(id:any){
-    this.productService.deleteProduct(id);
+    const dialogRef = this.dialog.open(ConfirmComponent,{
+      width: '450px',
+      data: {id:id, module:"product"}
+    });
+
+    dialogRef.afterClosed().subscribe((result:any)=>{
+      if( result == 1) {
+        this.openSnackBar("Producto eliminado", "Exitosa");
+        this.getProducts();
+      } else if (result== 2){
+        this.openSnackBar("Se producjo un error al eliminar producto","Error");
+      }
+    })
   }
 
 

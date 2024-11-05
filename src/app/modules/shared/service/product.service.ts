@@ -8,7 +8,7 @@ const base_url = "http://localhost:8080/api/v1";
   providedIn: 'root'
 })
 export class ProductService {
-  
+   
   constructor(private http: HttpClient) { }
 
   /**
@@ -49,4 +49,13 @@ export class ProductService {
     return this.http.post(endpoint,FormData);
   }
 
+  getProduct(termino:string){
+    const endpointByName=`${base_url}/products/filter/${termino}`;
+    
+    if(!isNaN(Number(termino))){
+      return this.http.get(`${base_url}/products/${termino}`);  
+    }
+
+    return this.http.get(endpointByName);
+  }
 }
