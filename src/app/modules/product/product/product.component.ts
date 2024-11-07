@@ -6,6 +6,7 @@ import { NewProductComponent } from '../new-product/new-product.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
+import { UtilService } from '../../shared/service/util.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -16,12 +17,21 @@ export class ProductComponent implements OnInit{
   private productService = inject(ProductService);
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
-  
-  
+  displayedColumns: string[]=[];
+  isAdmin:boolean=false;
+  private utilService = inject(UtilService);
+
   ngOnInit(): void {
     this.getProducts();
+
+    this.isAdmin = this.utilService.isAdmin();
+
+    if(this.isAdmin){
+      this.displayedColumns =['id','name','category','accounts','costPrice','sellPrice','picture','actions'];
+    } else{
+      this.displayedColumns =['id','name','category','accounts','costPrice','sellPrice','picture'];
+    }
   }
-  
   
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -125,7 +135,7 @@ export class ProductComponent implements OnInit{
   }
 
 
-  displayedColumns: string[]=['id','name','category','accounts','costPrice','sellPrice','picture','actions'];
+  
   dataSource : MatTableDataSource<ProductElement> = new MatTableDataSource<ProductElement>();
 }
 

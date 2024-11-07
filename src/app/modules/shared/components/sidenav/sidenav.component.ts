@@ -25,7 +25,7 @@ export class SidenavComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.userName=this.keycloackService.getUsername;
+    this.userName=this.keycloackService.getUsername();
     
   }
 

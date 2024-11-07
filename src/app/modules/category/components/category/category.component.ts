@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { CategoryService } from 'src/app/modules/shared/services/category.service';
+import { CategoryService } from 'src/app/modules/shared/service/category.service';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { UtilService } from 'src/app/modules/shared/service/util.service';
 
 @Component({
   selector: 'app-category',
@@ -18,13 +19,23 @@ export class CategoryComponent implements OnInit {
   public categoryService = inject(CategoryService);
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private utilService = inject(UtilService);
+  isAdmin:boolean = false;
+  displayedColumns: string[]=[];
 
   ngOnInit(): void {
     this.getCategories();
+    this.isAdmin = this.utilService.isAdmin();
+    if(this.isAdmin){
+      this.displayedColumns=['id','name','description','actions'];
+    } else {
+      this.displayedColumns=['id','name','description'];
+    }
   }
   
-  displayedColumns: string[]=['id','name','description','actions'];
   dataSource : MatTableDataSource<CategoryElement> = new MatTableDataSource<CategoryElement>();
+
+  
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductService } from 'src/app/modules/shared/service/product.service';
-import { CategoryService } from '../../shared/services/category.service';
+import { CategoryService } from '../../shared/service/category.service';
 
 @Component({
   selector: 'app-new-product',
