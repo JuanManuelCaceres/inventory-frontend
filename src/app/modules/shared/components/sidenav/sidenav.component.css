@@ -52,3 +52,11 @@ header{
     margin-right: 10px;
 }
 
+.center{
+    display: flex;
+    font-size: 10px;
+    flex-direction: row;
+    p {
+        font-size: 10px;
+    }
+}

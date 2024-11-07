@@ -10,12 +10,12 @@
                         <mat-icon>help_outline</mat-icon>
                     </button>
                 </li>
-                <li>
+                <li >
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>person_outline</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu" class="center">
-                        <mat-icon>exit_to_app</mat-icon>
+                        <mat-icon (click)="logout()">exit_to_app</mat-icon>
                         Cerrar Sesión
                     </mat-menu>
                 </li>
@@ -34,8 +34,8 @@
                 <!-- profile -->
                 <div class="profile-card">
                     <div class="header">
-                        <h2>Juan Manuel</h2>
-                        <h4>juan @ gmail.com</h4>
+                        <h2>{{userName}}</h2>
+                        
                     </div>
                 </div>
                 <mat-divider></mat-divider>
