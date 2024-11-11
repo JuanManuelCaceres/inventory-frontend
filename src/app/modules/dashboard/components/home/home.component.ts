@@ -11,10 +11,11 @@ import { ProductService } from 'src/app/modules/shared/service/product.service';
 export class HomeComponent implements OnInit{
   
   chartBar:any;
+  charDoughnut:any;
   private productService=inject(ProductService)
   
   ngOnInit(): void {
-    
+    this.getProducts();
   }
   
   getProducts(){
@@ -38,10 +39,13 @@ export class HomeComponent implements OnInit{
 
       listProduct.forEach((product:ProductElement)=>{
         nameProduct.push(product.name);
-        account.push(product.accounts);  
+        account.push(product.account);  
       });
 
-      // chart js
+      console.log(account);
+      
+
+      // chart js - barChart
       this.chartBar = new Chart('canvas-bar',{
         type: 'bar',
         data:{
@@ -50,7 +54,21 @@ export class HomeComponent implements OnInit{
             {label: 'Productos', data :account}
           ]
         }
-      })
+      });
+
+      
+      // chart js - doughnutChart
+      this.charDoughnut = new Chart('canvas-doughnut',{
+        type: 'doughnut',
+        data:{
+          labels: nameProduct,
+          datasets:[
+            {label: 'Productos', data :account}
+          ]
+        }
+      });
+
+
     }
   }
 }

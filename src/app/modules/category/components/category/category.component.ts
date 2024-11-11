@@ -20,12 +20,12 @@ export class CategoryComponent implements OnInit {
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private utilService = inject(UtilService);
-  isAdmin:boolean = false;
+  isAdmin:boolean = true;
   displayedColumns: string[]=[];
 
   ngOnInit(): void {
     this.getCategories();
-    this.isAdmin = this.utilService.isAdmin();
+    
     if(this.isAdmin){
       this.displayedColumns=['id','name','description','actions'];
     } else {
@@ -136,6 +136,26 @@ export class CategoryComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.proccesCategoriesRespones(resp);
       })
+  }
+
+  exportToExcel(){
+    this.categorySerivice.exportToExcelCategories()
+      .subscribe({
+        next:(data:any)=>{
+         let file = new Blob([data],{type: 'application/vnd.openxmlformats-officedocument.spreadshetml.sheet'});
+         let fileUrl = URL.createObjectURL(file);
+         var anchor =  document.createElement("a");
+         anchor.download = "categories.xlsx";
+         anchor.href = fileUrl;
+         anchor.click();
+
+         this.openSnackBar("Archivo descargado","Exitosamente")
+        },
+        error:(error:any)=>{
+          this.openSnackBar("No se pudo descargar el archivo","Error")
+        }
+        
+      });
   }
 }
 

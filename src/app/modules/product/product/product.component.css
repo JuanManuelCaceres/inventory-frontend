@@ -11,7 +11,12 @@
 ul li {
     list-style: none;
 }
-
+ul {
+    display: flex;
+}
+li {
+    margin-right: 6px;
+}
 .rigth{
     margin-left: auto;
 }

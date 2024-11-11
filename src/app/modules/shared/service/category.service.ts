@@ -57,7 +57,11 @@ export class CategoryService {
     return this.http.put(endpoint,body);
   }
 
-  
+  /**
+   * get categories filtered by name
+   * @param termino type : string
+   * @returns list of categories filtered by name
+   */
   getCategory(termino:string){
     const endpointId = `${base_url}/categories/${termino}`;
 
@@ -68,5 +72,15 @@ export class CategoryService {
     return this.http.get(endpointName);
   }
 
+/**
+ * http method to get categories in excel file
+ * @returns excel file with categories
+ */
+  exportToExcelCategories(){
+    const endpoint = `${base_url}/categories/export/excel`;
+    return this.http.get(endpoint,{
+      responseType:'blob'
+    });
+  }
   
 }

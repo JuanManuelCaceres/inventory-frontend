@@ -18,13 +18,12 @@ export class ProductComponent implements OnInit{
   public dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   displayedColumns: string[]=[];
-  isAdmin:boolean=false;
+  isAdmin:boolean=true;
   private utilService = inject(UtilService);
 
   ngOnInit(): void {
     this.getProducts();
 
-    this.isAdmin = this.utilService.isAdmin();
 
     if(this.isAdmin){
       this.displayedColumns =['id','name','category','accounts','costPrice','sellPrice','picture','actions'];
@@ -134,6 +133,25 @@ export class ProductComponent implements OnInit{
     })
   }
 
+  exportToExcel(){
+    this.productService.exportToExcel()
+      .subscribe({
+        next:(data:any)=>{
+         let file = new Blob([data],{type: 'application/vnd.openxmlformats-officedocument.spreadshetml.sheet'});
+         let fileUrl = URL.createObjectURL(file);
+         var anchor =  document.createElement("a");
+         anchor.download = "products.xlsx";
+         anchor.href = fileUrl;
+         anchor.click();
+
+         this.openSnackBar("Archivo descargado","Exitosamente")
+        },
+        error:(error:any)=>{
+          this.openSnackBar("No se pudo descargar el archivo","Error")
+        }
+        
+      });
+  }
 
   
   dataSource : MatTableDataSource<ProductElement> = new MatTableDataSource<ProductElement>();
@@ -143,7 +161,7 @@ export interface ProductElement{
   id: number;
   name: string;
   category: any;
-  accounts: number;
+  account: number;
   costPrice: number;
   sellPrice: number;
   picture: string;
