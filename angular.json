@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "lodash","js-sha256"
+              "lodash","js-sha256","base64-js"
             ],
             "outputPath": "dist/inventory-frontend",
             "index": "src/index.html",

@@ -10,9 +10,11 @@ import { KeycloakService } from 'keycloak-angular';
 export class SidenavComponent implements OnInit{
   
   mobileQuery: MediaQueryList;
-  private keycloackService = inject(KeycloakService);
+  private keycloakService = inject(KeycloakService);
 
-  userName:any;
+  userProfile:any=null;
+  isAuthenticated:boolean = false;
+  userName:string='';
 
   menuNav = [
     {name: "Home", route:"home", icon:"home"},
@@ -24,12 +26,11 @@ export class SidenavComponent implements OnInit{
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
-  ngOnInit(): void {
-    this.userName=this.keycloackService.getUsername();
+  ngOnInit(){
     
   }
 
   logout(){
-    this.keycloackService.logout();
+    
   }
 }
